@@ -1,13 +1,26 @@
-import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useEffect } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
+import { Link, useParams } from 'react-router-dom';
 import { MiContexto } from '../../context/CartContext';
 import './ListPostIts.css';
 
 const ListPostIts = () => {
-	const { postIts, deletePostIt, trashPostIts } = useContext(MiContexto);
+	const { setMessage, setSuccess, message, success, postIts, deletePostIt } = useContext(MiContexto);
+	const { id } = useParams();
+	useEffect(() => {
+		toast.success(message);
+	}, [message]);
+
+	useEffect(() => {
+		return () => {
+			setSuccess(false);
+		};
+	}, []);
 
 	const deletePostItButton = (id) => {
 		deletePostIt(id);
+		setSuccess(true);
+		setMessage('Nota movida a la papelera');
 	};
 
 	const numeroDeNotas = () => {
@@ -22,6 +35,7 @@ const ListPostIts = () => {
 		return (
 			<div className="postItContainer">
 				<div>{numeroDeNotas()}</div>
+				{success ? <Toaster /> : ''}
 				<h1>Notas</h1>
 
 				<div to="/editPostIt" className="postItWrap">
@@ -29,7 +43,7 @@ const ListPostIts = () => {
 						<div id="noteContainer" key={element.id}>
 							<div className="postIt">{element.note}</div>
 							<div className="btnContainer">
-								<Link to={{ pathname: '/editPostIt', state: { id: element.id, listNote: element.note } }} className="btn btnLinkList">
+								<Link to={{ pathname: '/editPostIt/' + element.id, state: { id: element.id, listNote: element.note } }} className="btn btnLinkList">
 									Editar
 								</Link>
 								<button className="btn" onClick={() => deletePostItButton(element.id)}>
