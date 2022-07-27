@@ -9,10 +9,8 @@ import './TrashCan.css';
 import { React, useState } from 'react';
 
 function TrashCan() {
-	const { emptyTrashCan, postIts, deletePostIt, trashPostIts } = useContext(MiContexto);
+	const { setSuccess, setMessage, emptyTrashCan, postIts, deletePostIt, trashPostIts } = useContext(MiContexto);
 	const location = useLocation();
-	//console.log(location);
-	//Usamos history para poder cambiar boton
 	const navigate = useNavigate();
 	const [button, setButton] = useState('Crear Post It');
 	const [clearTrashCanDisplay, setClearTrashCan] = useState(false);
@@ -30,25 +28,9 @@ function TrashCan() {
 		}
 	}, [location]);
 
-	/* 
-	navigate.listen((location) => {
-		if (location.pathname === '/') {
-			setButton('Crear Post It');
-			setClearTrashCan(false);
-		} else if (location.pathname === '/deletedPostIts') {
-			setClearTrashCan(true);
-			setButton('Atras');
-		} else {
-			setClearTrashCan(false);
-			setButton('Atras');
-		}
-	}); */
-
 	const goToTrashCan = (e) => {
 		if (trashPostIts.length === 0) {
 			e.preventDefault();
-
-			//addToast('Papelera vacia', { appearance: 'error', autoDismiss: true, autoDismissTimeout: 3000 });
 		}
 	};
 
@@ -64,11 +46,11 @@ function TrashCan() {
 		if (ask) {
 			try {
 				emptyTrashCan();
+
 				navigate('/');
-				//addToast('Papelera vaciada con éxito', { appearance: 'error', autoDismiss: true, autoDismissTimeout: 3000 });
-			} catch (error) {
-				//addToast('Ups, Algo salió mal', { appearance: 'error', autoDismiss: true, autoDismissTimeout: 3000 });
-			}
+				setMessage('Papelera vaciada con éxito');
+				setSuccess(true);
+			} catch (error) {}
 		}
 	};
 	return (
