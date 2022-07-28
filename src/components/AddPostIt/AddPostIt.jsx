@@ -15,7 +15,7 @@ const AddPostIt = () => {
 			addPostIt(note);
 			navigate('/');
 			setSuccess(true);
-			setMessage('Post it creado!');
+			setMessage('Nota creada!');
 			toast.dismiss();
 		} else {
 			e.preventDefault();

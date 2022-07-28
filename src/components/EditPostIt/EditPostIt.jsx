@@ -7,10 +7,11 @@ import './EditPostIt.css';
 const EditPostIt = () => {
 	const { id } = useParams();
 	const { setMessage, setSuccess, postIts, editPostIt } = useContext(MiContexto);
+
 	const [note, setNote] = useState(postIts.find((i) => i.id === +id).note);
 	const [load, setLoad] = useState(false);
-
 	const navigate = useNavigate();
+
 	const formNote = () => {
 		const postItDispatch = {
 			id,
@@ -23,17 +24,13 @@ const EditPostIt = () => {
 				toast.dismiss();
 				setLoad(false);
 				setSuccess(true);
-				setMessage('Post it editado con exito!');
+				setMessage('Nota editada con éxito!');
 
 				navigate('/');
-			} catch (error) {
-				//addToast('Ups, Algo salió mal', { appearance: 'error', autoDismiss: true, autoDismissTimeout: 3000 });
-			}
+			} catch (error) {}
 		} else {
-			//e.preventDefault();
 			setLoad(true);
 			toast.error('Ups, Debes de completar el campo nota');
-			//addToast('Ups, Debes de completar el campo nota', { appearance: 'error', autoDismiss: true, autoDismissTimeout: 3000 });
 		}
 	};
 

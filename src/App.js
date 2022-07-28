@@ -10,21 +10,17 @@ function App() {
   return (
     <div className="App">
 
-    <CartContext>
-      <BrowserRouter>
+      <CartContext>
+        <BrowserRouter>
          <TrashCan/>
         <Routes>
-
-        <Route path="/" element={<ListPostIts />} />
-        <Route path="/deletedPostIts" element={<TrashCanList />} />
-        <Route path="/addPostIt" element={<AddPostIt />} />
-        <Route path="/editPostIt/:id" element={<EditPostIt />} /> 
-        </Routes>
-
+          <Route path="/" element={<ListPostIts />} />
+          <Route path="/deletedPostIts" element={<TrashCanList />} />
+          <Route path="/addPostIt" element={<AddPostIt />} />
+          <Route path="/editPostIt/:id" element={<EditPostIt />} /> 
+          </Routes>
         </BrowserRouter>
-
-        </CartContext>
-      
+      </CartContext>
     </div>
   );
 }

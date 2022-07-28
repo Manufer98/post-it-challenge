@@ -9,7 +9,7 @@ import './TrashCan.css';
 import { React, useState } from 'react';
 
 function TrashCan() {
-	const { setSuccess, setMessage, emptyTrashCan, postIts, deletePostIt, trashPostIts } = useContext(MiContexto);
+	const { setSuccess, setMessage, emptyTrashCan, trashPostIts } = useContext(MiContexto);
 	const location = useLocation();
 	const navigate = useNavigate();
 	const [button, setButton] = useState('Crear Post It');
@@ -48,7 +48,7 @@ function TrashCan() {
 				emptyTrashCan();
 
 				navigate('/');
-				setMessage('Papelera vaciada con éxito');
+				setMessage('Papelera vaciada con éxito!');
 				setSuccess(true);
 			} catch (error) {}
 		}

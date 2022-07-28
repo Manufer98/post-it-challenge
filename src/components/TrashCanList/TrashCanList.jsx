@@ -5,7 +5,7 @@ import { MiContexto } from '../../context/CartContext';
 import './TrashCanList.css';
 
 function TrashCanList() {
-	const { setMessage, setSuccess, permanentDeletePostIt, restorePostIt, postIts, deletePostIt, trashPostIts } = useContext(MiContexto);
+	const { permanentDeletePostIt, restorePostIt, trashPostIts } = useContext(MiContexto);
 	const navigate = useNavigate();
 	const [load, setLoad] = useState(false);
 
@@ -18,9 +18,7 @@ function TrashCanList() {
 			if (trashPostIts.length === 1) {
 				navigate('/');
 			}
-		} catch (error) {
-			//addToast('Ups, Algo salió mal', { appearance: 'error', autoDismiss: true, autoDismissTimeout: 1500 });
-		}
+		} catch (error) {}
 	};
 
 	const permanentDeletePostItButton = (id) => {
@@ -32,13 +30,10 @@ function TrashCanList() {
 				setLoad(true);
 				toast.success('Nota eliminada');
 
-				//addToast('PostIt eliminado con éxito!', { appearance: 'success', autoDismiss: true, autoDismissTimeout: 1500 });
 				if (trashPostIts.length === 1) {
 					navigate('/');
 				}
-			} catch (error) {
-				//addToast('Ups, Algo salió mal', { appearance: 'error', autoDismiss: true, autoDismissTimeout: 1500 });
-			}
+			} catch (error) {}
 		}
 	};
 
