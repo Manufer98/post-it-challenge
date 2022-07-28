@@ -3,7 +3,7 @@ export const MiContexto = createContext({});
 
 const CartContext = ({ children }) => {
 	const [postIts, setPostIts] = useState(
-		JSON.parse(localStorage.getItem('listaNotas')) ?? [
+		JSON.parse(localStorage.getItem('listaNotas')) || [
 			{ id: 1, note: 'nota 1' },
 			{ id: 2, note: 'nota 2' },
 			{ id: 3, note: 'nota 3' },
@@ -12,8 +12,8 @@ const CartContext = ({ children }) => {
 
 	const [success, setSuccess] = useState(false);
 	const [message, setMessage] = useState('');
-	const [id, setId] = useState(JSON.parse(localStorage.getItem('id')) ?? 4);
-	const [trashPostIts, setTrashPostIts] = useState(JSON.parse(localStorage.getItem('listaPapelera')) ?? []);
+	const [id, setId] = useState(JSON.parse(localStorage.getItem('id')) || 4);
+	const [trashPostIts, setTrashPostIts] = useState(JSON.parse(localStorage.getItem('listaPapelera')) || []);
 
 	const addPostIt = (note) => {
 		const postIt = { id, note };
@@ -45,16 +45,20 @@ const CartContext = ({ children }) => {
 		localStorage.setItem('listaPapelera', JSON.stringify(filtertrashPostIts));
 	};
 
-	const deletePostIt = (id) => {
-		const filterpostIts = postIts.filter((i) => i.id !== id);
-		setPostIts(filterpostIts);
-		const copytrashPostIts = [...trashPostIts];
-		const post = postIts.find((i) => i.id === id);
-		copytrashPostIts.push(post);
-		setTrashPostIts(copytrashPostIts);
+	const deletePostIt = (postIt) => {
+		const { id } = postIt;
+		const index = postIts.findIndex((i) => i.id === id);
 
-		localStorage.setItem('listaNotas', JSON.stringify(filterpostIts));
-		localStorage.setItem('listaPapelera', JSON.stringify(copytrashPostIts));
+		if (index !== -1) {
+			const copytrashPostIts = [...trashPostIts];
+			const copyPostIts = [...postIts];
+			copyPostIts.splice(index, 1);
+			setPostIts(copyPostIts);
+			copytrashPostIts.push(postIt);
+			setTrashPostIts(copytrashPostIts);
+			localStorage.setItem('listaNotas', JSON.stringify(copyPostIts));
+			localStorage.setItem('listaPapelera', JSON.stringify(copytrashPostIts));
+		}
 	};
 
 	const permanentDeletePostIt = (id) => {

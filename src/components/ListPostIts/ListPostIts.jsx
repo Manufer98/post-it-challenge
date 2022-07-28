@@ -1,26 +1,25 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
-import { Link, useParams } from 'react-router-dom';
+
+import { Link } from 'react-router-dom';
 import { MiContexto } from '../../context/CartContext';
 import './ListPostIts.css';
 
 const ListPostIts = () => {
-	const { setMessage, setSuccess, message, success, postIts, deletePostIt } = useContext(MiContexto);
-	const { id } = useParams();
+	const { setSuccess, message, success, postIts, deletePostIt } = useContext(MiContexto);
+
+	const [load, setLoad] = useState(false);
 	useEffect(() => {
 		toast.success(message);
-	}, [message]);
-
-	useEffect(() => {
 		return () => {
 			setSuccess(false);
 		};
-	}, []);
+	}, [message]);
 
 	const deletePostItButton = (id) => {
 		deletePostIt(id);
-		setSuccess(true);
-		setMessage('Nota movida a la papelera');
+		setLoad(true);
+		toast.success('Nota enviada a la papelera');
 	};
 
 	const numeroDeNotas = () => {
@@ -36,6 +35,7 @@ const ListPostIts = () => {
 			<div className="postItContainer">
 				<div>{numeroDeNotas()}</div>
 				{success ? <Toaster /> : ''}
+				{load ? <Toaster /> : ''}
 				<h1>Notas</h1>
 
 				<div to="/editPostIt" className="postItWrap">
@@ -46,7 +46,7 @@ const ListPostIts = () => {
 								<Link to={{ pathname: '/editPostIt/' + element.id, state: { id: element.id, listNote: element.note } }} className="btn btnLinkList">
 									Editar
 								</Link>
-								<button className="btn" onClick={() => deletePostItButton(element.id)}>
+								<button className="btn" onClick={() => deletePostItButton(element)}>
 									Borrar
 								</button>
 							</div>
@@ -58,6 +58,7 @@ const ListPostIts = () => {
 	} else {
 		return (
 			<div className="postItContainer">
+				{load ? <Toaster /> : ''}
 				<h1>Notas</h1>
 				<div to="/editPostIt" className="postItWrap">
 					<h3>Lista vacía</h3>
