@@ -9,9 +9,9 @@ function TrashCanList() {
 	const navigate = useNavigate();
 	const [load, setLoad] = useState(false);
 
-	const restorePostItButton = (id) => {
+	const restorePostItButton = (postIt) => {
 		try {
-			restorePostIt(id);
+			restorePostIt(postIt);
 			setLoad(true);
 			toast.success('Nota Recuperada');
 
@@ -21,12 +21,12 @@ function TrashCanList() {
 		} catch (error) {}
 	};
 
-	const permanentDeletePostItButton = (id) => {
+	const permanentDeletePostItButton = (postIt) => {
 		let ask = window.confirm('Estas seguro que quieres eliminarla de forma permanente?');
 
 		if (ask === true) {
 			try {
-				permanentDeletePostIt(id);
+				permanentDeletePostIt(postIt);
 				setLoad(true);
 				toast.success('Nota eliminada');
 
@@ -54,10 +54,10 @@ function TrashCanList() {
 					<div id="noteContainer" key={element.id}>
 						<div className="postIt">{element.note}</div>
 						<div className="btnContainer">
-							<button className="btn btnTrashCanList" onClick={() => restorePostItButton(element.id)}>
+							<button className="btn btnTrashCanList" onClick={() => restorePostItButton(element)}>
 								Restaurar
 							</button>
-							<button className="btn btnTrashCanList" onClick={() => permanentDeletePostItButton(element.id)}>
+							<button className="btn btnTrashCanList" onClick={() => permanentDeletePostItButton(element)}>
 								Borrar
 							</button>
 						</div>

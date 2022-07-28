@@ -34,15 +34,19 @@ const CartContext = ({ children }) => {
 		localStorage.setItem('listaNotas', JSON.stringify(postIts));
 	};
 
-	const restorePostIt = (id) => {
-		const findtrashPostIt = trashPostIts.find((i) => i.id === id);
-		const copyPostIts = [...postIts];
-		copyPostIts.push(findtrashPostIt);
-		const filtertrashPostIts = trashPostIts.filter((i) => i.id !== id);
-		setTrashPostIts(filtertrashPostIts);
-		setPostIts(copyPostIts);
-		localStorage.setItem('listaNotas', JSON.stringify(copyPostIts));
-		localStorage.setItem('listaPapelera', JSON.stringify(filtertrashPostIts));
+	const restorePostIt = (postIt) => {
+		const { id } = postIt;
+		const index = trashPostIts.findIndex((i) => i.id === id);
+		if (index !== -1) {
+			const copyPostIts = [...postIts];
+			const copytrashPostIts = [...trashPostIts];
+			copytrashPostIts.splice(index, 1);
+			copyPostIts.push(postIt);
+			setPostIts(copyPostIts);
+			setTrashPostIts(copytrashPostIts);
+			localStorage.setItem('listaNotas', JSON.stringify(copyPostIts));
+			localStorage.setItem('listaPapelera', JSON.stringify(copytrashPostIts));
+		}
 	};
 
 	const deletePostIt = (postIt) => {
@@ -61,10 +65,15 @@ const CartContext = ({ children }) => {
 		}
 	};
 
-	const permanentDeletePostIt = (id) => {
-		const filtertrashPostIts = trashPostIts.filter((i) => i.id !== id);
-		setTrashPostIts(filtertrashPostIts);
-		localStorage.setItem('listaPapelera', JSON.stringify(filtertrashPostIts));
+	const permanentDeletePostIt = (postIt) => {
+		const { id } = postIt;
+		const index = trashPostIts.findIndex((i) => i.id === id);
+		if (index !== -1) {
+			const copytrashPostIts = [...trashPostIts];
+			copytrashPostIts.splice(index, 1);
+			setTrashPostIts(copytrashPostIts);
+			localStorage.setItem('listaPapelera', JSON.stringify(copytrashPostIts));
+		}
 	};
 
 	const emptyTrashCan = () => {
