@@ -19,7 +19,7 @@ You can visit a live demo of this project with this [link](https://post-it-chall
 You can clone the repository with the following command
 
 ```
-git clone https://github.com/Manufer98/carrito-compra-fernandez
+git clone https://github.com/Manufer98/post-it-challenge
 ```
 
 ## Dependencies
