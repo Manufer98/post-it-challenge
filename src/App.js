@@ -1,3 +1,4 @@
+import { Toaster } from 'react-hot-toast';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import './App.css';
 import AddPostIt from "./components/AddPostIt/AddPostIt";
@@ -12,6 +13,7 @@ function App() {
 
       <CartContext>
         <BrowserRouter>
+        <Toaster /> 
          <TrashCan/>
         <Routes>
           <Route path="/" element={<ListPostIts />} />
