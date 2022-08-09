@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react';
-import toast, { Toaster } from 'react-hot-toast';
+import React, { useContext } from 'react';
+import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { MiContexto } from '../../context/CartContext';
 import './TrashCanList.css';
@@ -7,12 +7,11 @@ import './TrashCanList.css';
 function TrashCanList() {
 	const { permanentDeletePostIt, restorePostIt, trashPostIts } = useContext(MiContexto);
 	const navigate = useNavigate();
-	const [load, setLoad] = useState(false);
 
 	const restorePostItButton = (postIt) => {
 		try {
 			restorePostIt(postIt);
-			setLoad(true);
+
 			toast.success('Nota Recuperada');
 
 			if (trashPostIts.length === 1) {
@@ -27,7 +26,7 @@ function TrashCanList() {
 		if (ask === true) {
 			try {
 				permanentDeletePostIt(postIt);
-				setLoad(true);
+
 				toast.success('Nota eliminada');
 
 				if (trashPostIts.length === 1) {
@@ -47,7 +46,7 @@ function TrashCanList() {
 	return (
 		<div className="postItContainer">
 			<div>{numeroDeNotas()}</div>
-			{load ? <Toaster /> : ''}
+
 			<h1>Papelera</h1>
 			<div to="/editPostIt" className="postItWrap">
 				{trashPostIts.map((element) => (

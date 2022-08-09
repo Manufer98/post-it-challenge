@@ -7,9 +7,10 @@ import full_bin from '../../assets/trashCan/recycle_bin_full_small.png';
 import './TrashCan.css';
 
 import { React, useState } from 'react';
+import toast from 'react-hot-toast';
 
 function TrashCan() {
-	const { setSuccess, setMessage, emptyTrashCan, trashPostIts } = useContext(MiContexto);
+	const { emptyTrashCan, trashPostIts } = useContext(MiContexto);
 	const location = useLocation();
 	const navigate = useNavigate();
 	const [button, setButton] = useState('Crear Post It');
@@ -48,8 +49,7 @@ function TrashCan() {
 				emptyTrashCan();
 
 				navigate('/');
-				setMessage('Papelera vaciada con éxito!');
-				setSuccess(true);
+				toast.success('Papelera vaciada con éxito!');
 			} catch (error) {}
 		}
 	};

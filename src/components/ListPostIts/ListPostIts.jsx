@@ -1,24 +1,15 @@
-import React, { useContext, useEffect, useState } from 'react';
-import toast, { Toaster } from 'react-hot-toast';
+import React, { useContext } from 'react';
+import toast from 'react-hot-toast';
 
 import { Link } from 'react-router-dom';
 import { MiContexto } from '../../context/CartContext';
 import './ListPostIts.css';
 
 const ListPostIts = () => {
-	const { setSuccess, message, success, postIts, deletePostIt } = useContext(MiContexto);
-
-	const [load, setLoad] = useState(false);
-	useEffect(() => {
-		toast.success(message);
-		return () => {
-			setSuccess(false);
-		};
-	}, [message]);
+	const { postIts, deletePostIt } = useContext(MiContexto);
 
 	const deletePostItButton = (id) => {
 		deletePostIt(id);
-		setLoad(true);
 		toast.success('Nota enviada a la papelera');
 	};
 
@@ -34,8 +25,7 @@ const ListPostIts = () => {
 		return (
 			<div className="postItContainer">
 				<div>{numeroDeNotas()}</div>
-				{success ? <Toaster /> : ''}
-				{load ? <Toaster /> : ''}
+
 				<h1>Notas</h1>
 
 				<div to="/editPostIt" className="postItWrap">
@@ -58,7 +48,6 @@ const ListPostIts = () => {
 	} else {
 		return (
 			<div className="postItContainer">
-				{load ? <Toaster /> : ''}
 				<h1>Notas</h1>
 				<div to="/editPostIt" className="postItWrap">
 					<h3>Lista vacía</h3>
